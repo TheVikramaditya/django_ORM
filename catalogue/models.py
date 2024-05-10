@@ -27,6 +27,12 @@ class Attribute(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True)
     
+    
+    
+class AttributeValue(models.Model):
+    attribute_value = models.CharField(max_length=200)
+    attribute = models.ForeignKey(Attribute,on_delete=models.CASCADE)
+    
 
 class ProductType(models.Model):
     name = models.CharField(max_length=100)
@@ -75,7 +81,7 @@ class ProductLine(models.Model):
     order = models.IntegerField()
     weight = models.FloatField()
     product = models.ForeignKey(Product,on_delete=models.PROTECT,default=None)
-    attribute = models.ManyToManyField(Attribute,related_name="attribute")
+    attribute_value = models.ManyToManyField(AttributeValue,related_name="attribute_value")
 
 class ProductImage(models.Model):
     name = models.CharField(max_length=200)
@@ -92,3 +98,7 @@ class ProductImage(models.Model):
     product_line = models.ForeignKey(ProductLine,on_delete=models.CASCADE,default=None)
     
     
+class StockControl(models.Model):
+    stock_qty = models.IntegerField()
+    name = models.CharField(max_length=100)
+    stock_product = models.OneToOneField(Product,on_delete=models.CASCADE) 
