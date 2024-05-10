@@ -81,7 +81,7 @@ class ProductLine(models.Model):
     order = models.IntegerField()
     weight = models.FloatField()
     product = models.ForeignKey(Product,on_delete=models.PROTECT,default=None)
-    attribute_value = models.ManyToManyField(AttributeValue,related_name="attribute_value")
+    attribute_value = models.ManyToManyField(AttributeValue,related_name="product_lines")
 
 class ProductImage(models.Model):
     name = models.CharField(max_length=200)
@@ -101,4 +101,5 @@ class ProductImage(models.Model):
 class StockControl(models.Model):
     stock_qty = models.IntegerField()
     name = models.CharField(max_length=100)
-    stock_product = models.OneToOneField(Product,on_delete=models.CASCADE) 
+    stock_product = models.OneToOneField(Product,on_delete=models.CASCADE)
+     
