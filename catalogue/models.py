@@ -23,6 +23,19 @@ class SeasonalEvent(models.Model):
 
 
 
+class Attribute(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField(null=True)
+    
+
+class ProductType(models.Model):
+    name = models.CharField(max_length=100)
+    parent = models.ForeignKey('self',on_delete=models.CASCADE)
+
+
+
+
+
 class Product(models.Model):
     name = models.CharField(max_length=200,null=False,blank=False)
     pid = models.CharField(max_length=200,null=False,blank=False)
@@ -47,6 +60,9 @@ class Product(models.Model):
     category = models.ForeignKey(Category,on_delete=models.SET_NULL,null=True)
     seasonal_event = models.ForeignKey(SeasonalEvent,on_delete=models.SET_NULL,null=True)#some products are specially for some festivals
     
+    #Django is going to build a new table for many to many relationship , called linked table
+    product_type = models.ManyToManyField(ProductType,related_name="product_type")
+    
     def __str__(self):
         return self.name
     
@@ -59,7 +75,7 @@ class ProductLine(models.Model):
     order = models.IntegerField()
     weight = models.FloatField()
     product = models.ForeignKey(Product,on_delete=models.PROTECT,default=None)
-    
+    attribute = models.ManyToManyField(Attribute,related_name="attribute")
 
 class ProductImage(models.Model):
     name = models.CharField(max_length=200)
@@ -76,11 +92,3 @@ class ProductImage(models.Model):
     product_line = models.ForeignKey(ProductLine,on_delete=models.CASCADE,default=None)
     
     
-class Attribute(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.TextField(null=True)
-    
-
-class ProductType(models.Model):
-    name = models.CharField(max_length=100)
-    parent = models.ForeignKey('self',on_delete=models.CASCADE)
