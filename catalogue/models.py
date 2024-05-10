@@ -58,7 +58,7 @@ class ProductLine(models.Model):
     stock_qty = models.IntegerField()
     order = models.IntegerField()
     weight = models.FloatField()
-    product = models.ForeignKey(Product,on_delete=models.PROTECT)
+    product = models.ForeignKey(Product,on_delete=models.PROTECT,default=None)
     
 
 class ProductImage(models.Model):
@@ -73,5 +73,14 @@ class ProductImage(models.Model):
     # 5 - SET_DEFAULT = this option sets the foreign key in the child table to a default value specified by the database schema.
     # 6 - SET() = specify a custom value or expression to set the foreign key in the child table when a referenced row in the parent table is deleted.
     #7  - DO_NOTHING = no action is taken on the corresponding rows in the child table.could potentially lead to referential integrity issues if not handled properly.
-    product_line = models.ForeignKey(ProductLine,on_delete=models.CASCADE)
+    product_line = models.ForeignKey(ProductLine,on_delete=models.CASCADE,default=None)
     
+    
+class Attribute(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField(null=True)
+    
+
+class ProductType(models.Model):
+    name = models.CharField(max_length=100)
+    parent = models.ForeignKey('self',on_delete=models.CASCADE)
