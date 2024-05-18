@@ -11,6 +11,13 @@ class CategoryAdmin(admin.ModelAdmin):
     search_fields = ['name']
     list_display = ['name','is_active','parent']
     
+
+
+
+
+class ProductAdmin(admin.ModelAdmin):
+    # add filters to the right side
+    list_filter = ('stock_status',)
     
 admin.site.register(Category,CategoryAdmin)#model, features
-admin.site.register(Product)
+admin.site.register(Product,ProductAdmin)
