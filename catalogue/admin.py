@@ -8,7 +8,7 @@ from . models import *
 class CategoryAdmin(admin.ModelAdmin):
     # prepopulated_fields = {'slug':('name',)}#when creating name , slug field automatically populated
     # the above is commented as i am using save function to override or creating slug
-    pass
+    search_fields = ['name']
     
     
 admin.site.register(Category,CategoryAdmin)#model, features
