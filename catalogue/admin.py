@@ -9,8 +9,10 @@ class CategoryAdmin(admin.ModelAdmin):
     # prepopulated_fields = {'slug':('name',)}#when creating name , slug field automatically populated
     # the above is commented as i am using save function to override or creating slug
     search_fields = ['name']
-    list_display = ['name','is_active','parent']
-    
+    list_display = ['id','name','is_active','parent']
+    #  Allow editing of fields directly in the list
+    list_editable = ('name',)
+    # list_display_links = ('id',)
 
 
 
